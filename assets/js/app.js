@@ -64,47 +64,27 @@ var circle = circlesAndTextEnter.append("circle")
   .attr("cx", d => xLinearScale(d.poverty))
   .attr("cy", d => yLinearScale(d.healthcare))
   .attr("r", "12") 
-  .attr("fill", "magenta") 
+  .attr("fill", "skyblue") 
 
 circlesAndTextEnter.append("text")
   .attr("dx", d => xLinearScale(d.poverty))
-  .attr("dy", d => yLinearScale(d.healthcare) + 5) //didn't quite center right without a little nudge*************
+  .attr("dy", d => yLinearScale(d.healthcare) + 5)
   .attr("text-anchor","middle")
-  .attr("fill","white")
+  .attr("fill","grey")
   .attr("font-family", "arial")
   .text(function(d){return d.abbr})
 
-//Initialize tool tip - not required but let's just add it in
-var toolTip = d3.tip()
-.attr("class", "tooltip")
-.offset([80, -60])
-.html(function(d) {
-  return (`${d.state}<br>Poverty: ${d.poverty}%<br>Healthcare: ${d.healthcare}%`);
-});
-
-//Create tooltip in the chart
-chartGroup.call(toolTip);
-
-//Create event listeners to display and hide the tooltip
-circlesAndTextEnter.on("click", function(data) {
-toolTip.show(data, this);
-})
-// onmouseout event
-.on("mouseout", function(data, index) {
-  toolTip.hide(data);
-});
-
-//label the axes
+// Label Axes
 chartGroup.append("text")
 .attr("transform", "rotate(-90)")
 .attr("y", 0 - margin.left + 40)
 .attr("x", 0 - (height /1.5))
 .attr("dy", "1em")
 .attr("class", "axisText")
-.text("Healthcare (percentage of population)");
+.text("Healthcare (% percentage of population)");
 
 chartGroup.append("text")
 .attr("transform", `translate(${width / 3}, ${height + margin.top + 30})`)
 .attr("class", "axisText")
-.text("Poverty (percentage of population)");
+.text("Poverty (% percentage of population)");
 });
